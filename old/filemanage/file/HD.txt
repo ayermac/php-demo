@@ -1,0 +1,117 @@
+﻿今日访问用户数	7,314	本周访问用户数	13,968
+注册用户 / 上限	17,177 / 20,000	未验证用户	18
+贵宾	165	捐赠者 Donor	226
+被警告用户 warned	0	被禁用户 disabled	320
+男生	16,407	女生	678
+ 
+种子	10,205	断种	1,784
+做种数	82,810	下载数	3,159
+同伴	85,969	做种数 / 下载数比例	2621%
+当前访问用户数	340	当前Tracker用户数	6,170
+种子总大小	207.722 TB	总上传量	16.224 PB
+总下载量	1.870 PB	总数据量	18.094 PB
+ 
+Peasant leechwarned	202	User	10,489
+Power User	3,772	Elite User	1,702
+Crazy User	563	Insane User	212
+Veteran User	113	Extreme User	29
+Ultimate User	1	Nexus Master	0
+
+Time:2016-5-23 10:10:00
+
+
+SELECT * 
+FROM assess_newbie_state a
+LEFT JOIN users b ON a.userid = b.id
+WHERE uploaded >107374182400
+AND activated =  'yes'
+AND item =2
+AND START >  '2016-05-18 00:00:00'
+
+显示行 0 - 29 (47 总计, 查询花费 0.0046 秒) [start: 2016-05-23 22:08:54 - 2016-05-20 02:16:34]
+SELECT * 
+FROM assess_newbie_state a
+LEFT JOIN users b ON a.userid = b.id
+WHERE uploaded >107374182400
+AND activated =  'yes'
+AND item =2
+AND START >  '2016-05-18 20:00:00'
+
+SELECT * 
+FROM assess_newbie_state a
+LEFT JOIN users b ON a.userid = b.id
+WHERE seedbonus >10000
+AND activated =  'yes'
+AND item =4
+AND START >  '2016-05-18 20:00:00'
+purebonus
+
+SELECT * 
+FROM assess_newbie_state a
+LEFT JOIN users b ON a.userid = b.id
+WHERE uploaded >32212254720
+AND downloaded >32212254720
+AND purebonus >3000
+AND enabled =  'yes'
+AND activated =  'yes'
+AND item =1
+AND START >  '2016-05-18 20:00:00'
+LIMIT 0 , 30
+
+
+SELECT * 
+FROM assess_newbie_state a
+LEFT JOIN users b ON a.userid = b.id
+WHERE uploaded<32212254720
+or downloaded<32212254720
+or purebonus<3000
+AND activated =  'yes'
+AND item =1
+AND START >  '2016-05-18 20:00:00'
+
+SELECT * 
+FROM  `assess_newbie_state` a
+LEFT JOIN users b ON a.userid = b.id
+WHERE enabled =  'yes'
+AND item <>0
+AND activated =  'yes'
+
+update assess_newbie_state a left join users b on a.userid=b.id set passed='yes',passtime='2016-05-28 15:10:00' WHERE uploaded>32212254720
+and downloaded>32212254720
+and purebonus>3000
+AND activated =  'yes'
+AND item =1
+AND START >  '2016-05-18 20:00:00'
+
+2268
+
+影响了 423 行。 ( 查询花费 0.0340 秒 )
+UPDATE assess_newbie_state a LEFT JOIN users b ON a.userid = b.id SET passed =  'yes',
+passtime =  '2016-05-31 10:20:00' WHERE uploaded >107374182400 AND activated =  'yes' and item =2 AND START >  '2016-05-18 20:00:00';
+Time:2016-05-24 10:00:03
+
+update assess_newbie_state a left join users b on a.userid=b.id set passed='no',passtime='0000-00-00 00:00:00' WHERE purebonus<10000
+AND activated =  'yes'
+AND item =4
+AND START >  '2016-05-18 20:00:00'
+
+统计于2016-05-25 15:15:00
+今日访问用户数	6,837	本周访问用户数	11,362
+注册用户 / 上限	15,010 / 20,000	未验证用户	0
+贵宾	166	捐赠者 Donor	232
+被警告用户 warned	0	被禁用户 disabled	295
+男生	14,361	女生	559
+
+统计于2016-05-31 10:18:00
+今日访问用户数	6,844	本周访问用户数	11,096
+注册用户 / 上限	14,872 / 20,000	未验证用户	0
+贵宾	165	捐赠者 Donor	236
+被警告用户 warned	0	被禁用户 disabled	310
+男生	14,232	女生	550
+
+统计于2016-06-01 23:25:00
+今日访问用户数	6,907	本周访问用户数	11,018
+注册用户 / 上限	14,822 / 20,000	未验证用户	0
+贵宾	153	捐赠者 Donor	236
+被警告用户 warned	0	被禁用户 disabled	321
+男生	14,184	女生	548
