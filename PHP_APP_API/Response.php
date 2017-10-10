@@ -14,7 +14,7 @@ class Response{
      * @param array $data 数据
      * @param $type 输出数据格式
      */
-    public static function show($code, $message = '', $data = array(), $type = 'json')
+    public static function send($code, $message = '', $data = array(), $type = 'json')
     {
         if (!is_numeric($code)) {
             return '';
