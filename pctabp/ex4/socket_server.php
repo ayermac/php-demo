@@ -5,6 +5,9 @@
  * Date: 2017/10/17
  * Time: 21:15
  */
+/**
+ * Socket 服务端
+ */
 $host = "192.168.0.5";
 $port = 12345;
 set_time_limit(0);
@@ -31,7 +34,8 @@ $input = socket_read($spawn, 1024) or die("Could not read input\n");
 $input = trim($input);
 
 // 反转客户端输入数据，返回服务端
-$output = strrev($input) . "\n";
+//$output = strrev($input) . "\n";
+$output = $input;
 socket_write($spawn, $output, strlen($output)) or die("Could not write output\n");
 
 // 关闭 sockets
