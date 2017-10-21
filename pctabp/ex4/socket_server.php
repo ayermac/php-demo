@@ -13,7 +13,7 @@ $port = 12345;
 set_time_limit(0);
 
 // 创建 socket
-$socket = socket_create(AF_INET, SOCK_STREAM, 0) or die("Could not create socket\n");
+$socket = socket_create(AF_INET, SOCK_STREAM, 'tcp') or die("Could not create socket\n");
 
 // 非阻塞模式
 socket_set_block($socket) or die("socket_set_block() 失败的原因是:" . socket_strerror(socket_last_error()) . "/n");
