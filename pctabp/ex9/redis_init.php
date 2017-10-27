@@ -6,11 +6,14 @@
  * Time: 21:12
  */
 /**
- * Redis 基础使用
+ * PHP Redis 基础使用
  */
 $redis = new Redis();
 $redis->connect('127.0.0.1', 6379);
 
+/**
+ * String (字符串)操作
+ */
 //设置 Redis 字符串数据
 //$result = $redis->set('key', 'value');
 
@@ -49,7 +52,11 @@ $redis->connect('127.0.0.1', 6379);
 //$redis->set('key2', '2');
 //$result = $redis->getMultiple(array('key1', 'key2'));
 //print_r($result);// 结果：Array ( [0] => 1 [1] => 2 )
+//////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List (列表)操作
+ */
 //将一个或多个值 value 插入到列表 key 的表头
 //如果有多个 value 值，那么各个 value 值按从左到右的顺序依次插入到表头
 //如果 key 不存在，一个空列表会被创建并执行 LPUSH 操作。
@@ -116,3 +123,122 @@ $redis->connect('127.0.0.1', 6379);
 //print_r($redis->lgetrange('key', 0, -1)); //结果：Array ( [0] => c [1] => b [2] => a [3] => a )
 //var_dump($redis->lremove('key','a',2));   //结果：int(2)
 //print_r($redis->lgetrange('key', 0, -1)); //结果：Array ( [0] => c [1] => b )
+//////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Set (集合)操作
+ */
+//为一个Key添加一个值。如果这个值已经在这个Key中，则返回FALSE。
+//$redis->delete('key');
+//var_dump($redis->sadd('key','111'));   //结果：bool(true)
+//var_dump($redis->sadd('key','333'));   //结果：bool(true)
+//print_r($redis->sort('key')); //结果：Array ( [0] => 111 [1] => 333 )
+
+//删除Key中指定的value值
+//$redis->delete('key');
+//$redis->sadd('key','111');
+//$redis->sadd('key','333');
+//$redis->sremove('key','111');
+//print_r($redis->sort('key'));    //结果：Array ( [0] => 333 )
+
+//将Key1中的value移动到Key2中
+//$redis->delete('key');
+//$redis->delete('key1');
+//$redis->sadd('key','111');
+//$redis->sadd('key','333');
+//$redis->sadd('key1','222');
+//$redis->sadd('key1','444');
+//$redis->smove('key',"key1",'111');
+//print_r($redis->sort('key1'));    //结果：Array ( [0] => 111 [1] => 222 [2] => 444 )
+
+//检查集合中是否存在指定的值。
+//$redis->delete('key');
+//$redis->sadd('key','111');
+//$redis->sadd('key','112');
+//$redis->sadd('key','113');
+//var_dump($redis->scontains('key', '111')); //结果：bool(true)
+
+//返回集合中存储值的数量
+//$redis->delete('key');
+//$redis->sadd('key','111');
+//$redis->sadd('key','112');
+//echo $redis->ssize('key');   //结果：2
+
+//随机移除并返回key中的一个值
+//$redis->delete('key');
+//$redis->sadd("key","111");
+//$redis->sadd("key","222");
+//$redis->sadd("key","333");
+//var_dump($redis->spop("key"));  //结果：string(3) "333"
+
+//返回一个所有指定键的交集。如果只指定一个键，那么这个命令生成这个集合的成员。如果不存在某个键，则返回FALSE。
+//$redis->delete('key');
+//$redis->delete('key1');
+//$redis->sadd("key","111");
+//$redis->sadd("key","222");
+//$redis->sadd("key","333");
+//$redis->sadd("key1","111");
+//$redis->sadd("key1","444");
+//var_dump($redis->sinter("key","key1"));  //结果：array(1) { [0]=> string(3) "111" }
+
+//执行sInter命令并把结果储存到新建的变量中。
+//$redis->delete('key');
+//$redis->delete('key1');
+//$redis->sadd("key","111");
+//$redis->sadd("key","222");
+//$redis->sadd("key","333");
+//$redis->sadd("key1","111");
+//$redis->sadd("key1","444");
+//var_dump($redis->sinterstore('new',"key","key1"));  //结果：int(1)
+//var_dump($redis->smembers('new'));  //结果:array(1) { [0]=> string(3) "111" }
+
+//返回一个所有指定键的并集
+//$redis->delete('key');
+//$redis->delete('key1');
+//$redis->sadd("key","111");
+//$redis->sadd("key","222");
+//$redis->sadd("key","333");
+//$redis->sadd("key1","111");
+//$redis->sadd("key1","444");
+//print_r($redis->sunion("key","key1"));  //结果：Array ( [0] => 111 [1] => 222 [2] => 333 [3] => 444 )
+
+//执行sunion命令并把结果储存到新建的变量中。
+//$redis->delete('key');
+//$redis->delete('key1');
+//$redis->delete('new');
+//$redis->sadd("key","111");
+//$redis->sadd("key","222");
+//$redis->sadd("key","333");
+//$redis->sadd("key1","111");
+//$redis->sadd("key1","444");
+//var_dump($redis->sunionstore('new',"key","key1"));  //结果：int(4)
+//print_r($redis->smembers('new'));  //结果:Array ( [0] => 111 [1] => 222 [2] => 333 [3] => 444 )
+
+//返回第一个集合中存在并在其他所有集合中不存在的结果
+//$redis->delete('key');
+//$redis->delete('key1');
+//$redis->sadd("key","111");
+//$redis->sadd("key","222");
+//$redis->sadd("key","333");
+//$redis->sadd("key1","111");
+//$redis->sadd("key1","444");
+//print_r($redis->sdiff("key","key1"));  //结果：Array ( [0] => 222 [1] => 333 )
+
+//执行sdiff命令并把结果储存到新建的变量中。
+//$redis->delete('key');
+//$redis->delete('key1');
+//$redis->delete('new');
+//$redis->sadd("key","111");
+//$redis->sadd("key","222");
+//$redis->sadd("key","333");
+//$redis->sadd("key1","111");
+//$redis->sadd("key1","444");
+//var_dump($redis->sdiffstore('new',"key","key1"));  //结果：int(2)
+//print_r($redis->smembers('new'));  //结果:Array ( [0] => 222 [1] => 333 )
+
+//返回集合的内容
+//$redis->delete('key');
+//$redis->sadd("key","111");
+//$redis->sadd("key","222");
+//print_r($redis->smembers('key'));  //结果:Array ( [0] => 111 [1] => 222 )
+//////////////////////////////////////////////////////////////////////////////////////
