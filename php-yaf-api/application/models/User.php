@@ -11,8 +11,8 @@
  * Class UserModel
  */
 class UserModel {
-    public $errno = 0;
-    public $errmsg = "";
+    public $code = 0;
+    public $message = "";
     private $_db = null;
 
     public function __construct() {
