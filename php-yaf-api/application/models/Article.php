@@ -42,8 +42,8 @@ class ArticleModel
             $query->execute(array($artId));
             $ret = $query->fetchAll();
             if (!$ret || count($ret)!=1) {
-                $this->errno = -2004;
-                $this->errmsg = "找不到你要编辑的文章！";
+                $this->code = -2004;
+                $this->message = "找不到你要编辑的文章！";
                 return false;
             }
             $isEdit = true;
@@ -56,8 +56,8 @@ class ArticleModel
             $query->execute(array($cate));
             $ret = $query->fetchAll();
             if (!$ret || $ret[0][0]==0) {
-                $this->errno = -2005;
-                $this->errmsg = "找不到对应ID的分类信息，cate id:".$cate.", 请先创建该分类。";
+                $this->code = -2005;
+                $this->message = "找不到对应ID的分类信息，cate id:".$cate.", 请先创建该分类。";
                 return false;
             }
         }
@@ -74,8 +74,8 @@ class ArticleModel
         }
         $ret = $query->execute($data);
         if (!$ret) {
-            $this->errno = -2006;
-            $this->errmsg = "操作文章数据表失败, ErrInfo:".end($query->errorInfo());
+            $this->code = -2006;
+            $this->message = "操作文章数据表失败, ErrInfo:".end($query->errorInfo());
             return false;
         }
         /**
@@ -92,8 +92,8 @@ class ArticleModel
         $query = $this->_db->prepare("delete from `art` where `id`=? ");
         $ret = $query->execute( array(intval($artId)) );
         if( !$ret ) {
-            $this->errno = -2007;
-            $this->errmsg = "删除失败, ErrInfo:".end($query->errorInfo());
+            $this->code = -2007;
+            $this->message = "删除失败, ErrInfo:".end($query->errorInfo());
             return false;
         }
         return true;
@@ -103,8 +103,8 @@ class ArticleModel
         $query = $this->_db->prepare("update `art` set `status`=? where `id`=? ");
         $ret = $query->execute( array( $status, intval($artId)) );
         if( !$ret ) {
-            $this->errno = -2008;
-            $this->errmsg = "更新文章状态失败, ErrInfo:".end($query->errorInfo());
+            $this->code = -2008;
+            $this->message = "更新文章状态失败, ErrInfo:".end($query->errorInfo());
             return false;
         }
         return true;
@@ -115,8 +115,8 @@ class ArticleModel
         $status = $query->execute( array( intval($artId)) );
         $ret = $query->fetchAll();
         if( !$status || !$ret ) {
-            $this->errno = -2009;
-            $this->errmsg = "查询失败, ErrInfo:".end($query->errorInfo());
+            $this->code = -2009;
+            $this->message = "查询失败, ErrInfo:".end($query->errorInfo());
             return false;
         }
         $artInfo = $ret[0];
@@ -127,8 +127,8 @@ class ArticleModel
         $query->execute( array( $artInfo['cate']) );
         $ret = $query->fetchAll();
         if( !$ret ) {
-            $this->errno = -2010;
-            $this->errmsg = "获取分类信息失败, ErrInfo:".end($query->errorInfo());
+            $this->code = -2010;
+            $this->message = "获取分类信息失败, ErrInfo:".end($query->errorInfo());
             return false;
         }
         $artInfo['cateName'] = $ret[0]['name'];
@@ -159,8 +159,8 @@ class ArticleModel
         $stat = $query->execute( $filter );
         $ret = $query->fetchAll();
 //        if( !$ret ) {
-//            $this->errno = -2011;
-//            $this->errmsg = "获取文章列表失败, ErrInfo:".end($query->errorInfo());
+//            $this->code = -2011;
+//            $this->message = "获取文章列表失败, ErrInfo:".end($query->errorInfo());
 //            return false;
 //        }
 
@@ -178,8 +178,8 @@ class ArticleModel
                 $query->execute( array( $item['cate']) );
                 $retCate = $query->fetchAll();
                 if( !$retCate ) {
-                    $this->errno = -2010;
-                    $this->errmsg = "获取分类信息失败, ErrInfo:".end($query->errorInfo());
+                    $this->code = -2010;
+                    $this->message = "获取分类信息失败, ErrInfo:".end($query->errorInfo());
                     return false;
                 }
                 $cateName = $cateInfo[$item['cate']] = $retCate[0]['name'];

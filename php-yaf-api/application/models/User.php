@@ -24,14 +24,14 @@ class UserModel {
         $query->execute(array($uname));
         $ret = $query->fetchAll();
         if (!$ret || count($ret) != 1) {
-            $this->errno = -1003;
-            $this->errmsg = "用户名不存在";
+            $this->code = -1003;
+            $this->message = "用户名不存在";
             return false;
         }
         $userInfo = $ret[0];
         if ($this->_passwordGenerate($pwd) != $userInfo['pwd']) {
-            $this->errno = -1004;
-            $this->errmsg = "密码错误";
+            $this->code = -1004;
+            $this->message = "密码错误";
             return false;
         }
         return intval($userInfo[1]);
@@ -48,14 +48,14 @@ class UserModel {
         $count = $query->fetchAll();
 
         if ($count[0]['c'] != 0) {
-            $this->errno = -1005;
-            $this->errmsg = "用户名已存在";
+            $this->code = -1005;
+            $this->message = "用户名已存在";
             return false;
         }
 
         if (strlen($pwd) < 8) {
-            $this->errno = -1006;
-            $this->errmsg = "密码太短，请设置至少8位的密码";
+            $this->code = -1006;
+            $this->message = "密码太短，请设置至少8位的密码";
         } else {
             $password = $this->_passwordGenerate($pwd);
         }
@@ -63,8 +63,8 @@ class UserModel {
         $query = $this->_db->prepare("insert into `user` (`id`, `name`, `pwd`, `reg_time`) VALUES (null, ?, ?, ?)");
         $ret = $query->execute(array($uname, $password, date("Y-m-d H:i:s")));
         if (!$ret) {
-            $this->errno = -1006;
-            $this->errmsg = "注册失败";
+            $this->code = -1006;
+            $this->message = "注册失败";
             return false;
         }
         return true;

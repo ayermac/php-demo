@@ -27,14 +27,14 @@ class MailModel {
         $query->execute(array(intval($uid)));
         $ret = $query->fetchAll();
         if (!$ret || count($ret) != 1) {
-            $this->errno = -3003;
-            $this->errmsg = "用户邮箱信息查找失败";
+            $this->code = -3003;
+            $this->message = "用户邮箱信息查找失败";
             return false;
         }
         $userEmail = $ret[0]['email'];
         if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
-            $this->errno = -3004;
-            $this->errmsg = "用户邮箱信息不符合标准，邮箱地址为：".$userEmail;
+            $this->code = -3004;
+            $this->message = "用户邮箱信息不符合标准，邮箱地址为：".$userEmail;
             return false;
         }
         $mail = new Message();
