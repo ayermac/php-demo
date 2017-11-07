@@ -56,6 +56,7 @@ class UserModel {
         if (strlen($pwd) < 8) {
             $this->code = -1006;
             $this->message = "密码太短，请设置至少8位的密码";
+            return false;
         } else {
             $password = $this->_passwordGenerate($pwd);
         }
