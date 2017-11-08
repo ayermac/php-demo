@@ -22,7 +22,7 @@ class ArticleController extends Yaf_Controller_Abstract {
      * @return bool
      */
     public function addAction($artId = 0) {
-        if (!$this->_isAdmin()) {
+        if (!Admin_Object::isAdmin()) {
             return Response::json(-2000, "需要管理员权限才能操作");
         }
         // 防止爬虫模拟操作
@@ -53,7 +53,7 @@ class ArticleController extends Yaf_Controller_Abstract {
      * 编辑文章
      */
     public function editAction() {
-        if( !$this->_isAdmin() ) {
+        if( !Admin_Object::isAdmin() ) {
             return Response::json(-2000, "需要管理员权限才能操作");
         }
         $artId = $this->getRequest()->getQuery("artId", "0");
@@ -69,7 +69,7 @@ class ArticleController extends Yaf_Controller_Abstract {
      * @return bool
      */
     public function delAction() {
-        if (!$this->_isAdmin()) {
+        if (!Admin_Object::isAdmin()) {
             return Response::json(-2000, "需要管理员权限才能操作");
         }
         $artId = $this->getRequest()->getQuery("artId", "0");
@@ -90,7 +90,7 @@ class ArticleController extends Yaf_Controller_Abstract {
      * @return bool
      */
     public function statusAction(){
-        if( !$this->_isAdmin() ) {
+        if( !Admin_Object::isAdmin() ) {
             return Response::json(-2000, "需要管理员权限才能操作");
         }
 
@@ -139,8 +139,5 @@ class ArticleController extends Yaf_Controller_Abstract {
         } else {
             return Response::json($model->code, $model->message);
         }
-    }
-    private function _isAdmin(){
-        return true;
     }
 }

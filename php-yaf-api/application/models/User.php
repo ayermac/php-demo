@@ -26,7 +26,7 @@ class UserModel {
             $this->message = $this->_dao->message();
             return false;
         }
-        if ($this->_passwordGenerate($pwd) != $userInfo['pwd']) {
+        if (Common_Password::pwdEncode($pwd) != $userInfo['pwd']) {
             $this->code = -1004;
             $this->message = "密码错误";
             return false;
@@ -52,7 +52,7 @@ class UserModel {
             $this->message = "密码太短，请设置至少8位的密码";
             return false;
         } else {
-            $password = $this->_passwordGenerate($pwd);
+            $password = Common_Password::pwdEncode($pwd);
         }
 
         if (!$this->_dao->addUser($uname, $password, date('Y-m-d H:i:s'))) {
@@ -61,15 +61,5 @@ class UserModel {
             return false;
         }
         return true;
-    }
-
-    /**
-     * 为密码执行加密操作
-     * @param $password 密码
-     * @return string
-     */
-    private function _passwordGenerate($password) {
-        $pwd = md5("salt-xxxxxxxx".$password);
-        return $pwd;
     }
 }
