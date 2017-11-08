@@ -11,8 +11,7 @@ class Db_User extends Db_Base {
         $query->execute(array($uname));
         $ret = $query->fetchAll();
         if (!$ret || count($ret) != 1) {
-            self::$code = -1003;
-            self::$message = "用户名不存在";
+            list(self::$code, self::$message) = Err_Map::get(1003);
             return false;
         }
         return $ret[0];
@@ -23,8 +22,7 @@ class Db_User extends Db_Base {
         $query->execute(array($uname));
         $count = $query->fetchAll();
         if ($count[0]['c'] != 0) {
-            self::$code = -1005;
-            self::$message = "用户名已存在";
+            list(self::$code, self::$message) = Err_Map::get(1005);
             return false;
         }
         return true;
@@ -34,8 +32,7 @@ class Db_User extends Db_Base {
         $query = self::getDb()->prepare("insert into `user` (`id`, `name`, `pwd`, `reg_time`) VALUES (null, ?, ?, ?)");
         $ret = $query->execute(array($uname, $password, $datetime));
         if (!$ret) {
-            self::$code = -1006;
-            self::$message = "注册失败";
+            list(self::$code, self::$message) = Err_Map::get(1006);
             return false;
         }
         return true;

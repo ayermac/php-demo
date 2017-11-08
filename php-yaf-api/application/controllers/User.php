@@ -29,9 +29,13 @@ class UserController extends Yaf_Controller_Abstract {
         if (!$uname || !$pwd) {
             return Response::json(-1002, "用户名和密码不能为空");
         }
-        // 调用Model，做登录验证
-        $model = new UserModel();
-        $uid = $model->login(trim($uname), trim($pwd));
+        try {
+            // 调用Model，做登录验证
+            $model = new UserModel();
+            $uid = $model->login(trim($uname), trim($pwd));
+        } catch (Exception $e) {
+            return Response::json(-1000, "User Model 错误".$e->getMessage());
+        }
         if ($uid) {
             // 存入 session
             session_start();
