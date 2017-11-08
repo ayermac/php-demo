@@ -13,22 +13,19 @@
 class UserModel {
     public $code = 0;
     public $message = "";
-    private $_db = null;
+    private $_dao = null;
 
     public function __construct() {
-        $this->_db = new PDO("mysql:host=127.0.0.1;dbname=php_yaf_api", "root", '');
+        $this->_dao = new Db_User();
     }
 
     public function login($uname, $pwd) {
-        $query = $this->_db->prepare("select `pwd`, `id` from `user` where `name` = ?");
-        $query->execute(array($uname));
-        $ret = $query->fetchAll();
-        if (!$ret || count($ret) != 1) {
-            $this->code = -1003;
-            $this->message = "用户名不存在";
+        $userInfo = $this->_dao->find($uname);
+        if (!$userInfo) {
+            $this->code = $this->_dao->code();
+            $this->message = $this->_dao->message();
             return false;
         }
-        $userInfo = $ret[0];
         if ($this->_passwordGenerate($pwd) != $userInfo['pwd']) {
             $this->code = -1004;
             $this->message = "密码错误";
@@ -43,13 +40,10 @@ class UserModel {
      * @return bool
      */
     public function register($uname, $pwd) {
-        $query = $this->_db->prepare("select count(*) as c from `user` where `name` = ?");
-        $query->execute(array($uname));
-        $count = $query->fetchAll();
-
-        if ($count[0]['c'] != 0) {
-            $this->code = -1005;
-            $this->message = "用户名已存在";
+        // 检查用户名是否存在
+        if (!$this->_dao->checkExists($uname)) {
+            $this->code = $this->_dao->code();
+            $this->message = $this->_dao->message();
             return false;
         }
 
@@ -61,11 +55,9 @@ class UserModel {
             $password = $this->_passwordGenerate($pwd);
         }
 
-        $query = $this->_db->prepare("insert into `user` (`id`, `name`, `pwd`, `reg_time`) VALUES (null, ?, ?, ?)");
-        $ret = $query->execute(array($uname, $password, date("Y-m-d H:i:s")));
-        if (!$ret) {
-            $this->code = -1006;
-            $this->message = "注册失败";
+        if (!$this->_dao->addUser($uname, $password, date('Y-m-d H:i:s'))) {
+            $this->code = $this->_dao->code();
+            $this->message = $this->_dao->message();
             return false;
         }
         return true;

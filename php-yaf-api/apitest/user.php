@@ -28,7 +28,7 @@ if ($curl->error) {
     if ($rep['code'] !== 0) {
         die('注册用户失败，注册接口异常。错误信息: ' . $rep['message'] . "\n");
     }
-    echo "注册用户接口测试成功，注册新用户: {$uname}\n";
+    echo "注册用户接口测试成功，注册新用户: {$uname}, 密码: {$pwd}\n";
 }
 
 /**
