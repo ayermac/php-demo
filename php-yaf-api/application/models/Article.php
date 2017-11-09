@@ -9,6 +9,8 @@
  * 文章 Model 类
  * Class ArticleModel
  */
+require __DIR__.'/../../vendor/autoload.php';
+
 class ArticleModel
 {
     public $code = 0;
@@ -52,13 +54,20 @@ class ArticleModel
              * 检测分类 cate 是否存在
              * 如果是编辑文章，分类之前创建过，此处可不必再做校验
              */
-            $query = $this->_db->prepare("select count(*) from `cate` where `id`= ? ");
-            $query->execute(array($cate));
-            $ret = $query->fetchAll();
-            if (!$ret || $ret[0][0]==0) {
-                $this->code = -2005;
-                $this->message = "找不到对应ID的分类信息，cate id:".$cate.", 请先创建该分类。";
-                return false;
+            $redis = new Predis\Client();
+            $redisKey = 'cateExists-'.$cate;
+            $redisValue = 1;
+            if (!$redis->get($redisKey)) {
+                $query = $this->_db->prepare("select count(*) from `cate` where `id`= ? ");
+                $query->execute(array($cate));
+                $ret = $query->fetchAll();
+                if (!$ret || $ret[0][0] == 0) {
+                    $this->code = -2005;
+                    $this->message = "找不到对应ID的分类信息，cate id:" . $cate . ", 请先创建该分类。";
+                    return false;
+                } else {
+                    $redis->set($redisKey, $redisValue);
+                }
             }
         }
 
