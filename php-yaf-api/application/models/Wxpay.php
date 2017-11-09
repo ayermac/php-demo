@@ -54,35 +54,41 @@ class WxpayModel {
         }
 
         /**
-         * 创建bill订单
-         */
-        $query = $this->_db->prepare("insert into `bill` (`itemid`,`uid`,`price`,`status`) VALUES ( ?, ?, ?, 'unpaid') ");
-        $ret = $query->execute( array( $itemId, $uid, intval($item['price']) ) );
-        if ( !$ret ) {
-            $this->code = -6006;
-            $this->message = "创建账单失败";
-            return false;
-        }
-
-        /**
          * 成功创建账单后，需要扣去商品库存1件
          * TODO 此处应用用事务
          */
         try {
             $this->_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+            // 开启事务
             $this->_db->beginTransaction();
-            $query = $this->_db->prepare("update `item` set `stock`=`stock`-1 where `id`= ? ");
-            $query->execute( array( $itemId ) );
+            /**
+             * 创建bill订单
+             */
+            $queryBill = $this->_db->prepare("insert into `bill` (`itemid`,`uid`,`price`,`status`) VALUES ( ?, ?, ?, 'unpaid') ");
+            $retBill = $queryBill->execute( array( $itemId, $uid, intval($item['price']) ) );
+            if ( !$retBill ) {
+                $this->code = -6006;
+                $this->message = "创建账单失败";
+                throw new PDOException("创建账单失败");
+            }
+            /**
+             * 更新库存
+             */
+            $queryItem = $this->_db->prepare("update `item` set `stock`=`stock`-1 where `id`= ? ");
+            $retItem = $queryItem->execute( array( $itemId ) );
+            if ( !$retItem ) {
+                $this->code = -6007;
+                $this->message = "更新库存失败";
+                throw new PDOException("更新库存失败");
+            }
+
             $this->_db->commit();
 
             return intval($this->_db->lastInsertId());
         } catch (Exception $e) {
             $this->_db->rollBack();
-//            echo "Failed: " . $e->getMessage();
-            $this->code = -6007;
-            $this->message = "更新库存失败";
-            return false;
+            $this->code = -6008;
+            $this->message =  "Failed: " . $e->getMessage();
         }
     }
 
