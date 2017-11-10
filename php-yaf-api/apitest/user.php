@@ -5,6 +5,9 @@
  * Date: 2017/11/7
  * Time: 22:59
  */
+/**
+ * User 模块测试脚本
+ */
 require_once __DIR__.'/../vendor/autoload.php';
 use \Curl\Curl;
 
@@ -66,3 +69,5 @@ if ($curl->error) {
     }
     echo "使用新用户账号密码测试登录接口成功，账号: {$uname}，密码: {$pwd}\n";
 }
+
+echo "用户接口测试完毕。\n";
