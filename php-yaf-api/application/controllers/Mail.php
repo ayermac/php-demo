@@ -17,6 +17,10 @@ class MailController extends Yaf_Controller_Abstract {
 
     }
 
+    /**
+     * 发送邮件
+     * @return string
+     */
     public function sendAction() {
         // 防止爬虫模拟操作
         $submit = $this->getRequest()->getQuery("submit", "0");

@@ -22,6 +22,13 @@ class MailModel {
         $this->_db = new PDO("mysql:host=127.0.0.1;dbname=php_yaf_api", "root", '');
     }
 
+    /**
+     * 发送邮件
+     * @param int $uid
+     * @param string $title
+     * @param string $contents
+     * @return bool
+     */
     public function send($uid, $title, $contents) {
         $query = $this->_db->prepare("select `email` from `user` where `id`=?");
         $query->execute(array(intval($uid)));

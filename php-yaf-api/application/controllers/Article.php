@@ -19,6 +19,7 @@ class ArticleController extends Yaf_Controller_Abstract {
 
     /**
      * 新增文章
+     * @param int $artId 文章Id
      * @return bool
      */
     public function addAction($artId = 0) {
@@ -127,6 +128,11 @@ class ArticleController extends Yaf_Controller_Abstract {
             return Response::json(-2003, "缺失必要的文章 ID 参数");
         }
     }
+
+    /**
+     * 获取文章列表
+     * @return string
+     */
     public function listAction(){
         $pageNo = $this->getRequest()->getQuery( "pageNo", "0" );
         $pageSize = $this->getRequest()->getQuery( "pageSize", "10" );

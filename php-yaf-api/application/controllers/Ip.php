@@ -18,6 +18,7 @@ class IpController extends Yaf_Controller_Abstract {
 
     /**
      * 查询IP地址归属地
+     * @return String
      */
     public function findAction() {
         $ip = $this->getRequest()->getQuery("ip", "");

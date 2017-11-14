@@ -29,10 +29,10 @@ class ArticleModel
 
     /**
      * 新增文章
-     * @param $title 标题
-     * @param $contents 内容
-     * @param $author 作者
-     * @param $cate 分类
+     * @param string $title 标题
+     * @param string $contents 内容
+     * @param string $author 作者
+     * @param int $cate 分类
      * @param int $artId 文章 id
      * @return bool|int
      */
@@ -97,6 +97,11 @@ class ArticleModel
         }
     }
 
+    /**
+     * 删除文章
+     * @param int $artId
+     * @return bool
+     */
     public function del( $artId ){
         $query = $this->_db->prepare("delete from `art` where `id`=? ");
         $ret = $query->execute( array(intval($artId)) );
@@ -108,6 +113,12 @@ class ArticleModel
         return true;
     }
 
+    /**
+     * 修改状态
+     * @param int $artId
+     * @param string $status
+     * @return bool
+     */
     public function status( $artId, $status="offline" ){
         $query = $this->_db->prepare("update `art` set `status`=? where `id`=? ");
         $ret = $query->execute( array( $status, intval($artId)) );
@@ -119,6 +130,11 @@ class ArticleModel
         return true;
     }
 
+    /**
+     * 获取文章信息
+     * @param int $artId
+     * @return array|bool
+     */
     public function get( $artId ){
         $query = $this->_db->prepare("select `title`,`contents`,`author`,`cate`,`ctime`,`mtime`,`status` from `art` where `id`=? ");
         $status = $query->execute( array( intval($artId)) );
@@ -156,6 +172,14 @@ class ArticleModel
         return $data;
     }
 
+    /**
+     * 获取文章列表
+     * @param int $pageNo
+     * @param int $pageSize
+     * @param int $cate
+     * @param string $status
+     * @return array|bool
+     */
     public function artList( $pageNo=0, $pageSize=10, $cate=0, $status='online' ){
         $start = $pageNo * $pageSize + ($pageNo==0?0:1);
         if( $cate == 0 ) {

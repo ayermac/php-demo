@@ -20,6 +20,12 @@ class SmsModel {
         $this->_db = new PDO("mysql:host=127.0.0.1;dbname=php_yaf_api", "root", '');
     }
 
+    /**
+     * 发送
+     * @param int $uid
+     * @param int $templateId
+     * @return bool
+     */
     public function send($uid, $templateId) {
         if (!is_numeric($uid) || !is_numeric($templateId)) {
             $this->code = -4002;

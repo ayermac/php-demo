@@ -67,6 +67,7 @@ class WxpayController extends Yaf_Controller_Abstract {
 
     /**
      * 支付成功后的回调
+     * @return string
      */
     public function callbackAction() {
         $model = new WxpayModel();

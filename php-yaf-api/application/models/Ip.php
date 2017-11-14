@@ -14,6 +14,11 @@ class IpModel {
     public $code = 0;
     public $message = "";
 
+    /**
+     * 根据 IP 地址获取详细地址
+     * @param string $ip
+     * @return mixed|string
+     */
     public function get($ip) {
         $rep = ThirdParty_Ip::find($ip);
         return $rep;

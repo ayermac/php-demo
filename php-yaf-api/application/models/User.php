@@ -19,6 +19,12 @@ class UserModel {
         $this->_dao = new Db_User();
     }
 
+    /**
+     * 用户登录
+     * @param string $uname
+     * @param string $pwd
+     * @return bool|int
+     */
     public function login($uname, $pwd) {
         $userInfo = $this->_dao->find($uname);
         if (!$userInfo) {
@@ -35,8 +41,8 @@ class UserModel {
     }
     /**
      * 用户注册
-     * @param $uname 用户名
-     * @param $pwd 密码
+     * @param string $uname 用户名
+     * @param string $pwd 密码
      * @return bool
      */
     public function register($uname, $pwd) {

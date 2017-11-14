@@ -14,6 +14,7 @@ class PushController extends Yaf_Controller_Abstract {
 
     /**
      * 单独推送
+     * @return string
      */
     public function singleAction() {
         if (!$this->_isAdmin()) {
@@ -37,6 +38,7 @@ class PushController extends Yaf_Controller_Abstract {
 
     /**
      * 广播推送
+     * @return string
      */
     public function toallAction() {
         if (!$this->_isAdmin()) {

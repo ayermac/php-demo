@@ -28,6 +28,12 @@ class PushModel {
     public $code = 0;
     public $message = "";
 
+    /**
+     * 单推
+     * @param int $cid
+     * @param string $msg
+     * @return bool
+     */
     public function single($cid, $msg="测试内容") {
         $igt = new IGeTui(HOST,APPKEY,MASTERSECRET);
 
@@ -57,6 +63,11 @@ class PushModel {
         return true;
     }
 
+    /**
+     * 多推
+     * @param string $msg
+     * @return bool
+     */
     function toAll($msg){
         $igt = new IGeTui(HOST,APPKEY,MASTERSECRET);
 

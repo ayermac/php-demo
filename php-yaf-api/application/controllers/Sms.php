@@ -15,6 +15,7 @@ class SmsController extends Yaf_Controller_Abstract {
 
     /**
      * 短信发送操作
+     * @return string
      */
     public function sendAction() {
         // 防止爬虫模拟操作

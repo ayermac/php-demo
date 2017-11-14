@@ -28,8 +28,8 @@ class WxpayModel {
 
     /**
      * 创建订单
-     * @param $itemId 商品Id
-     * @param $uid 用户Id
+     * @param int $itemId 商品Id
+     * @param int $uid 用户Id
      * @return bool
      */
     public function createbill($itemId, $uid) {
