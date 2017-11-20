@@ -21,3 +21,10 @@ function BubbleSort(array $container)
     return $container;
 }
 var_dump(BubbleSort([4, 21, 41, 2]));
+
+$arr1 = array(100, 90, 80, 60);
+$arr2 = array(100, 80, 70, 60);
+$arr3 = array_merge($arr1, $arr2);
+sort($arr3);
+
+var_dump($arr3);
