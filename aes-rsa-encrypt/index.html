@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<textarea id="pubkey" rows="15" cols="65" style="display: none;">-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvaPVKMZfSPsWMEA8JIjQ
+LCP/rABCSW14fiGusJRxBrT6qFBtxf36BOdSBxLTHWcMYB6RVKW669JgObUmFg/4
+kHU7clxvw0hDKQREgHjVncu+EBMAuyCbXGo7QyAmPYvGQVidFUNB5hqQEgZ5Q+pd
+1g8p7b8n9ilTIDIA1OJbwsajqL/z4BqmOoayXJ6iu5Afa+14oMYT4kWku3k0NQmx
+OJIHb8qhTJx0wI57jC9Y9wYmClCrwTo0QMh2rNNR1EBxaaBEj/56HUDiCkl17BwH
+BFKTI2Px3NnswgoZXTcRXe37830ph8JpwdQyG5PYFKip59tqOXQvMYWlLTYZ3LXL
+CwIDAQAB
+-----END PUBLIC KEY-----</textarea>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jsencrypt/2.3.1/jsencrypt.min.js"></script>
+<script src="https://cdn.bootcss.com/cryptico/0.0.1343522940/cryptico.js"></script>
+<script type="text/javascript">
+	var public_key = $("#pubkey").val();
+// console.log(public_key);
+</script>
+<script type="text/javascript">
+// The passphrase used to repeatably generate this RSA key.
+var PassPhrase = "The Moon is a Harsh Mistress."; 
+
+// The length of the RSA key, in bits.
+var Bits = 1024; 
+
+var MattsRSAkey = cryptico.generateRSAKey(PassPhrase, Bits);
+
+var MattsPublicKeyString = cryptico.publicKeyString(MattsRSAkey);
+console.log(MattsPublicKeyString);
+</script>
+</body>
+</html>
