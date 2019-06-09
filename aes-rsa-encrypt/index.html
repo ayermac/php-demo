@@ -31,6 +31,11 @@ var MattsRSAkey = cryptico.generateRSAKey(PassPhrase, Bits);
 
 var MattsPublicKeyString = cryptico.publicKeyString(MattsRSAkey);
 console.log(MattsPublicKeyString);
+
+var PlainText = "Matt, I need you to help me with my Starcraft strategy.";
+
+var EncryptionResult = cryptico.encrypt(PlainText, MattsPublicKeyString);
+console.log(EncryptionResult);
 </script>
 </body>
 </html>
